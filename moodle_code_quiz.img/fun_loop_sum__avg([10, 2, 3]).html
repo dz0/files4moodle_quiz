@@ -1,0 +1,20 @@
+
+                        <!doctype html>
+                        <head>
+                        <meta charset="utf-8">
+                        <link rel="stylesheet" href="pygments_style.css">
+                        </head>
+                        <body>
+                        <div class="highlight"><pre> 
+ 
+    <span class="k">def</span> <span class="nf">sumuojam</span><span class="p">(</span> <span class="n">sar</span> <span class="p">):</span> 
+        <span class="n">suma</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sar</span><span class="p">:</span> 
+            <span class="n">suma</span> <span class="o">=</span> <span class="n">suma</span><span class="o">+</span><span class="n">x</span> 
+        <span class="k">return</span> <span class="n">suma</span> 
+ 
+    <span class="n">sar</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> 
+    <span class="n">vid</span> <span class="o">=</span> <span class="n">sumuojam</span><span class="p">(</span><span class="n">sar</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sar</span><span class="p">)</span>  <span class="c"># dalinant gali gautis trupmeninis sk, todėl rezultate bus vienas 0 po kablelio</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">vid</span><span class="p">)</span>
+</pre></div>
+</body>

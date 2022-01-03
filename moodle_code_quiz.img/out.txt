@@ -1,0 +1,63 @@
+
+$CATEGORY: $system$/TESTAI/Funkcijos/Unary_Arithmetic/mtx3rows_print_Col_RANDOM
+
+
+::mtx3rows_print_Col(1,[5, 6, 2],[4, 3, 1],[9, 0, 5])::[markdown]
+    Ką atspausdins? (atskirkite tarpais)
+\n
+\n    M = [ [5, 6, 2],
+\n          [4, 3, 1],
+\n          [9, 0, 5],
+\n        ]
+\n    for k in range(3):
+\n        print( M[k][1] )
+\n
+{=6 3 0 } 
+
+::mtx3rows_print_Col(2,[8, 2, 4],[4, 3, 1],[7, 2, 13])::[markdown]
+    Ką atspausdins? (atskirkite tarpais)
+\n
+\n    M = [ [8, 2, 4],
+\n          [4, 3, 1],
+\n          [7, 2, 13],
+\n        ]
+\n    for k in range(3):
+\n        print( M[k][2] )
+\n
+{=4 1 13 } 
+
+::mtx3rows_print_Col(2,[8, 2, 4],[7, 2, 13],[4, 3, 1])::[markdown]
+    Ką atspausdins? (atskirkite tarpais)
+\n
+\n    M = [ [8, 2, 4],
+\n          [7, 2, 13],
+\n          [4, 3, 1],
+\n        ]
+\n    for k in range(3):
+\n        print( M[k][2] )
+\n
+{=4 13 1 } 
+
+::mtx3rows_print_Col(2,[5, 6, 2],[4, 3, 1],[5, 6, 2])::[markdown]
+    Ką atspausdins? (atskirkite tarpais)
+\n
+\n    M = [ [5, 6, 2],
+\n          [4, 3, 1],
+\n          [5, 6, 2],
+\n        ]
+\n    for k in range(3):
+\n        print( M[k][2] )
+\n
+{=2 1 2 } 
+
+::mtx3rows_print_Col(0,[8, 2, 4],[8, 2, 4],[5, 6, 2])::[markdown]
+    Ką atspausdins? (atskirkite tarpais)
+\n
+\n    M = [ [8, 2, 4],
+\n          [8, 2, 4],
+\n          [5, 6, 2],
+\n        ]
+\n    for k in range(3):
+\n        print( M[k][0] )
+\n
+{=8 8 5 } 
