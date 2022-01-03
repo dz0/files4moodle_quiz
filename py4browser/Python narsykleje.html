@@ -1,0 +1,199 @@
+<html> 
+<head> 
+<meta charset="utf-8">
+<script src="lib/jquery.min.js" type="text/javascript"></script> 
+<!--
+<script src="http://www.skulpt.org/static/skulpt.min.js" type="text/javascript"></script> 
+<script src="http://www.skulpt.org/static/skulpt-stdlib.js" type="text/javascript"></script> 
+-->
+<script src="lib/skulpt.js" type="text/javascript"></script> 
+<script src="lib/skulpt-stdlib.js" type="text/javascript"></script> 
+
+
+<!--
+Code Mirror
+-->
+
+<link rel="stylesheet" href="lib/codemirror.5.css">
+<link rel="stylesheet" href="lib/show-hint.css">
+<script src="lib/codemirror.5.js"></script>
+<script src="lib/python.js"></script>
+<script src="lib/matchbrackets.js"></script>
+<!--
+<script src="lib/show-hint.js"></script>
+<script src="lib/python-hint.js"></script>
+<script src="lib/anyword-hint.js"></script>
+-->
+
+</head> 
+
+<body> 
+
+<script type="text/javascript"> 
+// output functions are configurable.  This one just appends some text
+// to a pre element.
+function outf(text) { 
+    var mypre = document.getElementById("output"); 
+    mypre.innerHTML = mypre.innerHTML + text; 
+} 
+function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+    return Sk.builtinFiles["files"][x];
+}
+
+// Here's everything you need to run a python program in skulpt
+// grab the code from your textarea
+// get a reference to your pre element for output
+// configure the output function
+// call Sk.importMainWithBody()
+function runit() { 
+   editor.save(); //codeMirror 
+   var prog = document.getElementById("yourcode").value; 
+   var mypre = document.getElementById("output");    mypre.innerHTML = ''; 
+   var myerr = document.getElementById("errors");    myerr.innerHTML = ''; 
+   Sk.pre = "output";
+   Sk.configure({output:outf, read:builtinRead}); 
+   (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+   var myPromise = Sk.misceval.asyncToPromise(function() {
+       return Sk.importMainWithBody("<stdin>", false, prog, true);
+   });
+   myPromise.then(function(mod) {
+       $('.buttons').hide();
+       console.log('success');
+   },
+       function(err) {
+       //~ console.log(err.toString());
+       myerr.innerHTML += err.toString() + '\n';
+   });
+} 
+</script> 
+
+
+
+
+
+
+<table>
+<tr>
+   <th>Kodas:   </th>
+   <th>      <button type="button" onclick="runit()">Vykdyti</button> :</th>
+</tr>
+<tr>
+   <td width="50%"> 
+      
+
+   
+      <textarea id="yourcode" cols="40" rows="15">
+from turtle import *
+
+for k in range(4):
+   forward(100)
+   left(90)
+
+ print "Hello World" 
+      </textarea>
+
+   </td>
+   <td width="50%">      
+         Slėpk/rodyk: <span  class="menu" onclick="$('.buttons').toggle();" style="cursor:pointer" >"Touch" komandos</span> , 
+          <span  class="menu" onclick="$('#results').toggle();">Rezultatai</span> 
+        <span class="menu" onclick='editor.undo();' style="font-size:1.3em; font-weight:bold;">↺</span> 
+         <span class="menu" onclick='editor.redo();' style="font-size:1.3em; font-weight:bold;">↻</span> 
+ 
+         
+         
+      <ul class="buttons">  
+         
+         <li class="command" onclick='insertText(this.innerHTML+"(  )");'>forward</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"(  )");'>left</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"(  )");'>right</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( ? )");'>dot</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( ? )");'>circle</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( , )");'>goto</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( ? )");'>setx</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( ? )");'>sety</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( )");'>xcor</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( )");'>ycor</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"(\"\")");'>color</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"\"\" ");'>print</li> 
+         <li class="command" onclick='insertText(this.innerHTML);'>speed(0)</li> 
+      </ul>
+      <ul class="buttons"> 
+         <li class="command" onclick='insertText(this.innerHTML+"()");'>getscreen</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( ? )");'>onclick</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"( , \"\" )");'>onkey</li> 
+      </ul>
+      <ul class="buttons"> 
+         <li class="command" onclick='insertText(this.innerHTML+"\n    ");'>if :</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"\n    ");'>elif :</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"\n    ");'>else:</li> 
+         <li class="command" onclick='insertText(this.innerHTML+"\n    ");'>while :</li> 
+         
+             <li class="baseword" onclick='insertText(this.innerHTML+"\n    ");'>for ? in  range( ? ):</li> 
+             <li class="baseword" onclick='insertText(this.innerHTML+"\n    ");'>def  ?( ):</li> 
+         <li class="command" onclick='insertText(":");'>&nbsp;&nbsp;:&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText(";");'>&nbsp;&nbsp;;&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText("#");'>&nbsp;&nbsp;#&nbsp;&nbsp;</li> 
+      </ul>
+      <ul class="buttons">
+         <li class="command" onclick='insertText("=");'>&nbsp;&nbsp;=&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText("(");'>&nbsp;&nbsp;(&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText(")");'>&nbsp;&nbsp;)&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText("\"");'>&nbsp;&nbsp;"&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText("[]");'>&nbsp;[ ]&nbsp;</li> 
+         
+         <li class="command" onclick='insertText("    ");'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li> 
+         <li class="command" onclick='insertText("\n");'>Enter</li> 
+      </ul>
+      <style>
+         ul.buttons > li { display: inline; border: 1px solid silver; cursor: pointer; height: 20px; margn: 10px; padding: 10px; line-height:40px; }
+         .menu { border: 1px solid silver; cursor: pointer; margn: 5px; padding: 5px;  }
+      </style>
+      
+      <!-- If you want turtle graphics include a canvas -->
+      <div id="results">
+         <pre id="errors"  style="color:red"></pre> 
+         <pre id="output"  style="color:blue"></pre> 
+         <div id="mycanvas"  style="border: 1px dotted silver;"></div> 
+      </div>
+   </td>
+</tr>
+</table>
+
+<script>
+   CodeMirror.commands.autocomplete = function(cm) {
+     CodeMirror.simpleHint(cm, CodeMirror.pythonHint);
+   }
+   
+  var editor = CodeMirror.fromTextArea(document.getElementById('yourcode'), {
+    mode:  {name: "python", version: 3},
+    tabMode: 'indent',
+    lineNumbers: true,
+    //~ theme: 'reeborg-dark',
+    indentUnit: 4,
+    viewportMargin: Infinity,
+    autofocus: true,
+  });
+  
+  $('.buttons').hide();
+
+function insertText(txt){
+   var doc = editor.getDoc();
+   var cursor = doc.getCursor(); // gets the line number in the cursor position
+   var line = doc.getLine(cursor.line); // get the line contents
+   var pos = { // create a new object to avoid mutation of the original selection
+       line: cursor.line,
+       ch: cursor.ch // set the character position to the end of the line
+   }
+   doc.replaceRange(txt, pos); // adds a new line
+   doc.focus();
+   doc.setCursor( {line:pos.line, ch:pos.ch+txt.length} );
+   }
+
+</script>
+
+
+</body> 
+
+</html> 
